@@ -1,0 +1,10 @@
+$primary-color: #ff3a7d;
+$secondary-color: #fff;
+
+// usage @include s1366 { }
+@mixin s1366{
+	@media screen and (max-width: 1366px){ @content;}
+}
+@mixin s736{
+	@media screen and (max-width: 736px){ @content;}
+}
