@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <h1 class="shop-title">Digital<br><span>Retail</span></h1>
+    <router-link to="/">
+      <h1 class="shop-title">Digital<br><span>Retail</span></h1>
+    </router-link>
     <router-view/>
     <h1 class="ribbon">
       <span class="ribbon-content">&copy; Copyright 2017.</span>

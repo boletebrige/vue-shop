@@ -7,13 +7,15 @@
         <span class="fi flaticon-sticker" :class="{ 'active': (products === stickers) }" @click="category(stickers)"></span>
       </div>
       <div class="divider"></div>
-      <div class="products-container">
+      <div class="product-container product-list">
         <div class="product" v-for="product in products" :key="product.id">
-          <img :src="product.image" alt="Product image">
-          <div class="overlay">
-            <span class="fi flaticon-search"></span>
-          </div>
-          <div class="price">{{ product.price }}</div>
+          <router-link :to="{ name: 'Product', params: { id: product.id } }">
+            <img :src="product.images[0]" alt="Product image">
+            <div class="overlay">
+              <span class="fi flaticon-search"></span>
+            </div>
+            <div class="price">{{ product.price }}</div>
+          </router-link>
         </div>
       </div>
     </div>

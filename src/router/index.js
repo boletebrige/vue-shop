@@ -1,10 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import ProductsPage from '@/components/ProductsPage'
-// import VueMaterial from 'vue-material'
-// import 'vue-material/dist/vue-material.min.css'
-
-// Vue.use(VueMaterial)
+import Product from '@/components/Product'
 
 Vue.use(Router)
 
@@ -14,6 +11,11 @@ export default new Router({
       path: '/',
       name: 'ProductsPage',
       component: ProductsPage
+    },
+    {
+      path: '/product/:id',
+      name: 'Product',
+      component: Product
     }
   ]
 })
