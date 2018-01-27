@@ -1,16 +1,16 @@
 export const TSHIRTS = [
-  { id: 0, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt.png', './static/shirt.png', './static/shirt.png'], price: '20' },
-  { id: 1, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt1.jpg', './static/shirt1.jpg', './static/shirt1.jpg'], price: '15' },
-  { id: 2, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt2.jpg', './static/shirt2.jpg', './static/shirt2.jpg'], price: '20' },
-  { id: 3, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt.png', './static/shirt.png', './static/shirt.png'], price: '15' },
-  { id: 4, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt1.jpg', './static/shirt1.jpg', './static/shirt1.jpg'], price: '20' },
-  { id: 5, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt2.jpg', './static/shirt2.jpg', './static/shirt2.jpg'], price: '15' },
-  { id: 6, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt.png', './static/shirt.png', './static/shirt.png'], price: '20' },
-  { id: 7, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt1.jpg', './static/shirt1.jpg', './static/shirt1.jpg'], price: '15' },
-  { id: 8, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt2.jpg', './static/shirt2.jpg', './static/shirt2.jpg'], price: '20' },
-  { id: 9, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt.png', './static/shirt.png', './static/shirt.png'], price: '15' },
-  { id: 10, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt1.jpg', './static/shirt1.jpg', './static/shirt1.jpg'], price: '20' },
-  { id: 11, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt2.jpg', './static/shirt2.jpg', './static/shirt2.jpg'], price: '15' }
+  { id: 0, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt.png', './static/shirt.png', './static/shirt.png'], categories: [ {name: 'Size', values: ['S', 'M', 'L', 'XL']}, {name: 'Color', values: ['White', 'Black', 'Red', 'Blue']} ], price: '20' },
+  { id: 1, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt1.jpg', './static/shirt1.jpg', './static/shirt1.jpg'], categories: [ {name: 'Size', values: ['S', 'M', 'L', 'XL']}, {name: 'Color', values: ['White', 'Black', 'Red', 'Blue']} ], price: '15' },
+  { id: 2, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt2.jpg', './static/shirt2.jpg', './static/shirt2.jpg'], categories: [ {name: 'Size', values: ['S', 'M', 'L', 'XL']}, {name: 'Color', values: ['White', 'Black', 'Red', 'Blue']} ], price: '20' },
+  { id: 3, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt.png', './static/shirt.png', './static/shirt.png'], categories: [ {name: 'Size', values: ['S', 'M', 'L', 'XL']}, {name: 'Color', values: ['White', 'Black', 'Red', 'Blue']} ], price: '15' },
+  { id: 4, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt1.jpg', './static/shirt1.jpg', './static/shirt1.jpg'], categories: [ {name: 'Size', values: ['S', 'M', 'L', 'XL']}, {name: 'Color', values: ['White', 'Black', 'Red', 'Blue']} ], price: '20' },
+  { id: 5, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt2.jpg', './static/shirt2.jpg', './static/shirt2.jpg'], categories: [ {name: 'Size', values: ['S', 'M', 'L', 'XL']}, {name: 'Color', values: ['White', 'Black', 'Red', 'Blue']} ], price: '15' },
+  { id: 6, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt.png', './static/shirt.png', './static/shirt.png'], categories: [ {name: 'Size', values: ['S', 'M', 'L', 'XL']}, {name: 'Color', values: ['White', 'Black', 'Red', 'Blue']} ], price: '20' },
+  { id: 7, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt1.jpg', './static/shirt1.jpg', './static/shirt1.jpg'], categories: [ {name: 'Size', values: ['S', 'M', 'L', 'XL']}, {name: 'Color', values: ['White', 'Black', 'Red', 'Blue']} ], price: '15' },
+  { id: 8, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt2.jpg', './static/shirt2.jpg', './static/shirt2.jpg'], categories: [ {name: 'Size', values: ['S', 'M', 'L', 'XL']}, {name: 'Color', values: ['White', 'Black', 'Red', 'Blue']} ], price: '20' },
+  { id: 9, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt.png', './static/shirt.png', './static/shirt.png'], categories: [ {name: 'Size', values: ['S', 'M', 'L', 'XL']}, {name: 'Color', values: ['White', 'Black', 'Red', 'Blue']} ], price: '15' },
+  { id: 10, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt1.jpg', './static/shirt1.jpg', './static/shirt1.jpg'], categories: [ {name: 'Size', values: ['S', 'M', 'L', 'XL']}, {name: 'Color', values: ['White', 'Black', 'Red', 'Blue']} ], price: '20' },
+  { id: 11, name: 'Pixel Art Collection I Must Have Been Dreaming T-Shirt', images: ['./static/shirt2.jpg', './static/shirt2.jpg', './static/shirt2.jpg'], categories: [ {name: 'Size', values: ['S', 'M', 'L', 'XL']}, {name: 'Color', values: ['White', 'Black', 'Red', 'Blue']} ], price: '15' }
 ]
 export const MUGS = [
   { id: 12, name: 'Ruby on Rails Mug', images: ['./static/ror_mug.jpeg', './static/ror_mug.jpeg', './static/ror_mug.jpeg'], price: '5' },

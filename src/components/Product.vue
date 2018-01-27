@@ -21,25 +21,19 @@
         <div class="info-item">
           <h2 class="title">{{ product.name }}</h2>
         </div>
-        <div class="info-item size">
+        <div class="info-item" v-for="(category, index) in product.categories" :key="index">
           <multiselect
-            placeholder="Size"
-            v-model="selectedSize"
-            :options="optionsSize">
+            :placeholder="category.name"
+            v-model="selectedOptions[index]"
+            :options="category.values">
           </multiselect>
         </div>
-        <div class="info-item color">
-          <multiselect
-            v-model="selectedColor"
-            :options="optionsColor">
-          </multiselect>
-        </div>
-        <div class="info-item amount noselect">
-          <span @click="changeAmount('-')" class="fi flaticon-minus-symbol operators"></span>
-          <span class="noselect amount-value">{{ amount }}</span>
-          <span @click="changeAmount('+')" class="fi flaticon-plus-symbol operators"></span>
-        </div>
-        <div class="info-item price">
+        <div class="info-item price cf">
+          <div class="amount noselect">
+            <span @click="changeAmount('-')" class="fi flaticon-minus-symbol operators"></span>
+            <span class="noselect amount-value">{{ amount }}</span>
+            <span @click="changeAmount('+')" class="fi flaticon-plus-symbol operators"></span>
+          </div>
           <p>{{ Number(product.price) * amount }} USD</p>
         </div>
         <button class="add-to-cart"><span class="fi flaticon-commerce"></span>Add to cart</button>
@@ -76,10 +70,7 @@ export default {
     return {
       product: null,
       products: null,
-      selectedColor: null,
-      optionsColor: ['list', 'of', 'options'],
-      selectedSize: null,
-      optionsSize: ['list', 'of', 'options'],
+      selectedOptions: [],
       amount: 1,
       testImg: ['/static/shirt.png', '/static/shirt.png', '/static/shirt.png'],
       swiperOptionTop: {
@@ -174,15 +165,27 @@ export default {
       padding: 20px 30px;
       .title {
         text-align: left;
-        font-size: 28px;
+        font-size: 30px;
         font-weight: 300;
       }
     }
+    .price {
+      padding: 50px 30px;
+      font-size: 45px;
+      font-weight: 500;
+      color: #3d3d3d;
+      p {
+        display: inline-block;
+        float: right;
+      }
+    }
     .amount {
-      text-align: right;
+      display: inline-block;
+      float: left;
       .operators {
         cursor: pointer;
         color: #989898;
+        font-size: 22px;
         -webkit-transition: opacity 0.5s ease-in; /* For Safari 3.1 to 6.0 */
         transition: opacity 0.5s ease-in;
         &:hover {
@@ -191,16 +194,9 @@ export default {
       }
       .amount-value {
         font-weight: 400;
-        font-size: 20px;
+        font-size: 22px;
         padding: 0 20px;
       }
-    }
-    .price {
-      padding-top: 50px;
-      text-align: right;
-      font-size: 45px;
-      font-weight: 500;
-      color: #3d3d3d;
     }
     .add-to-cart {
       float: right;
