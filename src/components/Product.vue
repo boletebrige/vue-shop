@@ -24,7 +24,7 @@
         <div class="info-item" v-for="(category, index) in product.categories" :key="index">
           <multiselect
             :placeholder="category.name"
-            v-model="selectedOptions[index]"
+            v-model="selectedOptions[category.name]"
             :options="category.values">
           </multiselect>
         </div>
@@ -36,19 +36,22 @@
           </div>
           <p>{{ Number(product.price) * amount }} USD</p>
         </div>
-        <button class="add-to-cart"><span class="fi flaticon-commerce"></span>Add to cart</button>
+        <button class="add-to-cart" @click="addToCart"><span class="fi flaticon-commerce"></span>Add to cart</button>
       </div>
-      <div class="product-details">
+      <div class="product-details" v-if="product.description">
         <h2>Details</h2>
         <div class="divider"></div>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur perferendis consectetur facere perspiciatis, tempora modi? Necessitatibus, reprehenderit quod illum asperiores quos eius? Incidunt pariatur ad repellat a laudantium exercitationem veniam!Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur perferendis consectetur facere perspiciatis, tempora modi? Necessitatibus, reprehenderit quod illum asperiores quos eius? Incidunt pariatur ad repellat a laudantium exercitationem veniam!
-          <br>
-          <br>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur perferendis consectetur facere perspiciatis, tempora modi? Necessitatibus, reprehenderit quod illum asperiores quos eius? Incidunt pariatur ad repellat a laudantium exercitationem veniam!
+          {{ product.description }}
         </p>
       </div>
     </div>
+    <sweet-modal title="This is a Tabbed Modal" ref="cartModal">
+      <sweet-modal-tab title="Tab 1" id="tab1">Contents of Tab 1</sweet-modal-tab>
+      <sweet-modal-tab title="Tab 2" id="tab2">Contents of Tab 2</sweet-modal-tab>
+      <sweet-modal-tab title="Tab 3" id="tab3" disabled>Tab 3 is disabled</sweet-modal-tab>
+      <!-- icons is an object containing SVG strings -->
+    </sweet-modal>
 </div>
 </template>
 
@@ -57,22 +60,28 @@ import 'swiper/dist/css/swiper.css'
 import 'vue-multiselect/dist/vue-multiselect.min.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import Multiselect from 'vue-multiselect'
+import { SweetModal, SweetModalTab } from 'sweet-modal-vue'
 import { TSHIRTS, MUGS, STICKERS } from '../data/products.js'
+
+var storage = window.localStorage
 
 export default {
   name: 'Product',
   components: {
     swiper,
     swiperSlide,
-    Multiselect
+    Multiselect,
+    SweetModal,
+    SweetModalTab
   },
   data () {
     return {
+      cart: [],
       product: null,
       products: null,
       selectedOptions: [],
       amount: 1,
-      testImg: ['/static/shirt.png', '/static/shirt.png', '/static/shirt.png'],
+      // swiper options
       swiperOptionTop: {
         spaceBetween: 10,
         navigation: {
@@ -90,6 +99,7 @@ export default {
     }
   },
   mounted () {
+    // swiper settings
     this.$nextTick(() => {
       const swiperTop = this.$refs.swiperTop.swiper
       const swiperThumbs = this.$refs.swiperThumbs.swiper
@@ -102,6 +112,13 @@ export default {
         this.product = el
       }
     })
+    // check if car is in localstorage
+    if (storage.getItem('cart')) {
+      this.cart = JSON.parse(storage.getItem('cart'))
+    } else {
+      storage.setItem('cart', JSON.stringify(this.cart))
+    }
+    console.log(this.cart)
   },
   methods: {
     changeAmount (operator) {
@@ -113,141 +130,32 @@ export default {
           this.amount++
           break
       }
+    },
+    addToCart () {
+      // console.log(this.selectedOptions)
+      // change ammount number if product is selected
+      // if (this.cart.length === 0) {
+      //   this.cart.push({id: this.product.id, image: this.product.images[0], name: this.product.name, price: this.product.price, amount: this.amount, selectedOptions: this.selectedOptions})
+      //   storage.setItem('cart', JSON.stringify(this.cart))
+      //   console.log(this.cart)
+      // } else {
+      //   this.cart.forEach(el => {
+      //     if (el.id === this.product.id && el.selectedOptions === this.selectedOptions) {
+      //       el.amount += this.amount
+      //       storage.setItem('cart', JSON.stringify(this.cart))
+      //       console.log('if', this.cart)
+      //     } else {
+      //       this.cart.push({id: this.product.id, image: this.product.images[0], name: this.product.name, price: this.product.price, amount: this.amount, selectedOptions: this.selectedOptions})
+      //       storage.setItem('cart', JSON.stringify(this.cart))
+      //       console.log('else', this.cart)
+      //     }
+      //   })
+      // }
+      this.cart.push({id: this.product.id, image: this.product.images[0], name: this.product.name, price: this.product.price, amount: this.amount, selectedOptions: this.selectedOptions})
+      storage.setItem('cart', JSON.stringify(this.cart))
+      console.log(this.cart)
+      this.$refs.cartModal.open()
     }
   }
 }
 </script>
-<style lang="scss">
-.single {
-  margin: 0 0 0 2px;
-  margin-top: 40px;
-  width: 84px;
-}
-.swiper-container {
-  // background-color: #000;
-}
-.swiper-slide {
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-.gallery-top {
-  height: 80% !important;
-  width: 100%;
-}
-.gallery-thumbs {
-  height: 20% !important;
-  box-sizing: border-box;
-  padding: 10px 0;
-}
-.gallery-thumbs .swiper-slide {
-  width: 25%;
-  height: 100%;
-  opacity: 0.4;
-}
-.gallery-thumbs .swiper-slide-active {
-  opacity: 1;
-}
-.product-container {
-  padding-bottom: 80px;
-  .product-gallery {
-    width: 50%;
-    float: left;
-    .thumb {
-      cursor: pointer;
-    }
-  }
-  .product-info {
-    width: 50%;
-    float: left;
-    font-family: 'Roboto', sans-serif;
-    .info-item {
-      padding: 20px 30px;
-      .title {
-        text-align: left;
-        font-size: 30px;
-        font-weight: 300;
-      }
-    }
-    .price {
-      padding: 50px 30px;
-      font-size: 45px;
-      font-weight: 500;
-      color: #3d3d3d;
-      p {
-        display: inline-block;
-        float: right;
-      }
-    }
-    .amount {
-      display: inline-block;
-      float: left;
-      .operators {
-        cursor: pointer;
-        color: #989898;
-        font-size: 22px;
-        -webkit-transition: opacity 0.5s ease-in; /* For Safari 3.1 to 6.0 */
-        transition: opacity 0.5s ease-in;
-        &:hover {
-          opacity: 0.6;
-        }
-      }
-      .amount-value {
-        font-weight: 400;
-        font-size: 22px;
-        padding: 0 20px;
-      }
-    }
-    .add-to-cart {
-      float: right;
-      margin-top: 20px;
-      margin-right: 30px;
-      color: #fff;
-      background-color: #ff3a7d;
-      padding: 5px 50px;
-      font-size: 20px;
-      border: 2px solid #fff;
-      outline: 2px solid #ff3a7d;
-      cursor: pointer;
-      -webkit-transition: background-color 0.5s ease-in, border 0.5s ease-in, color 1s ease-in; /* For Safari 3.1 to 6.0 */
-      transition: background-color 0.5s ease-in, border 0.5s ease-in, color 1s ease-in;
-      &:hover {
-        color: #ff3a7d;
-        background-color: #fff;
-        border: 2px solid #ff3a7d;
-        outline: 2px solid #fff;
-      }
-      span {
-        padding-right: 20px;
-        font-size: 32px;
-        vertical-align: middle;
-      }
-    }
-  }
-  .product-details {
-    display: inline-block;
-    font-family: 'Roboto', sans-serif;
-    text-align: left;
-    padding: 20px;
-    h2 {
-      font-size: 32px;
-      line-height: 46px;
-      font-weight: 500;
-      border-bottom: 5px solid #ff3a7d;
-      max-width: 320px;
-      width: 100%;
-    }
-    .bold-divider {
-      border-bottom: 5px solid #ff3a7d;
-      max-width: 320px;
-      width: 100%;
-    }
-    p {
-      padding: 20px;
-      font-weight: 300;
-      font-size: 18px;
-      line-height: 22px;
-    }
-  }
-}
-</style>
