@@ -21,12 +21,30 @@
         <div class="info-item">
           <h2 class="title">{{ product.name }}</h2>
         </div>
-        <div class="info-item" v-for="(category, index) in product.categories" :key="index">
+        <!-- <div class="info-item" v-for="(category, index) in product.categories" :key="index">
           <multiselect
             :placeholder="category.name"
             v-model="selectedOptions[category.name]"
             :options="category.values">
           </multiselect>
+        </div> -->
+        <div v-if="product.categories">
+          <div class="info-item" v-if="product.categories[0]">
+            <multiselect
+              :placeholder="product.categories[0].name"
+              v-model="option"
+              :options="product.categories[0].values">
+            </multiselect>
+          </div>
+        </div>
+        <div v-if="product.categories">
+          <div class="info-item" v-if="product.categories[1]">
+            <multiselect
+              :placeholder="product.categories[1].name"
+              v-model="option1"
+              :options="product.categories[1].values">
+            </multiselect>
+          </div>
         </div>
         <div class="info-item price cf">
           <div class="amount noselect">
@@ -46,12 +64,13 @@
         </p>
       </div>
     </div>
-    <sweet-modal title="This is a Tabbed Modal" ref="cartModal">
-      <sweet-modal-tab title="Tab 1" id="tab1">Contents of Tab 1</sweet-modal-tab>
+    <sweet-modal title="This is a Tabbed Modal" ref="cartModal" width="80%">
+      <sweet-modal-tab title="Tab 1" id="tab1">{{ cart }}</sweet-modal-tab>
       <sweet-modal-tab title="Tab 2" id="tab2">Contents of Tab 2</sweet-modal-tab>
       <sweet-modal-tab title="Tab 3" id="tab3" disabled>Tab 3 is disabled</sweet-modal-tab>
       <!-- icons is an object containing SVG strings -->
     </sweet-modal>
+    <sweet-modal ref="alertModal">Select all options</sweet-modal>
 </div>
 </template>
 
@@ -76,6 +95,11 @@ export default {
   },
   data () {
     return {
+      option: null,
+      option1: null,
+      i: [],
+      sOption: null,
+      arrayO: ['One', 'Two'],
       cart: [],
       product: null,
       products: null,
@@ -106,13 +130,14 @@ export default {
       swiperTop.controller.control = swiperThumbs
       swiperThumbs.controller.control = swiperTop
     })
+    // get product from list of products
     this.products = [].concat(TSHIRTS, MUGS, STICKERS)
     this.products.forEach(el => {
       if (el.id === Number(this.$route.params.id)) {
         this.product = el
       }
     })
-    // check if car is in localstorage
+    // check if cart is in localstorage
     if (storage.getItem('cart')) {
       this.cart = JSON.parse(storage.getItem('cart'))
     } else {
@@ -132,29 +157,33 @@ export default {
       }
     },
     addToCart () {
-      // console.log(this.selectedOptions)
-      // change ammount number if product is selected
-      // if (this.cart.length === 0) {
-      //   this.cart.push({id: this.product.id, image: this.product.images[0], name: this.product.name, price: this.product.price, amount: this.amount, selectedOptions: this.selectedOptions})
-      //   storage.setItem('cart', JSON.stringify(this.cart))
-      //   console.log(this.cart)
-      // } else {
-      //   this.cart.forEach(el => {
-      //     if (el.id === this.product.id && el.selectedOptions === this.selectedOptions) {
-      //       el.amount += this.amount
-      //       storage.setItem('cart', JSON.stringify(this.cart))
-      //       console.log('if', this.cart)
-      //     } else {
-      //       this.cart.push({id: this.product.id, image: this.product.images[0], name: this.product.name, price: this.product.price, amount: this.amount, selectedOptions: this.selectedOptions})
-      //       storage.setItem('cart', JSON.stringify(this.cart))
-      //       console.log('else', this.cart)
-      //     }
-      //   })
-      // }
-      this.cart.push({id: this.product.id, image: this.product.images[0], name: this.product.name, price: this.product.price, amount: this.amount, selectedOptions: this.selectedOptions})
-      storage.setItem('cart', JSON.stringify(this.cart))
-      console.log(this.cart)
-      this.$refs.cartModal.open()
+      if (!this.option && !this.option1 && this.product.categories) {
+        // show alert if product have option for select
+        this.$refs.alertModal.open()
+      } else {
+        if (this.cart.length === 0) {
+          // add product to cart
+          this.cart.push({id: this.product.id, image: this.product.images[0], name: this.product.name, price: this.product.price, amount: this.amount, option: this.option, option1: this.option1})
+          this.$refs.cartModal.open()
+          console.log('first item', this.cart)
+        } else {
+          if (this.cart.some(el => (el.id === this.product.id && el.option === this.option && el.option1 === this.option1))) {
+            // if product already in cart increase amount in cart
+            this.cart.forEach(el => {
+              if (el.id === this.product.id && el.option === this.option && el.option1 === this.option1) {
+                el.amount += this.amount
+              }
+            })
+            this.$refs.cartModal.open()
+            console.log('increment', this.cart)
+          } else {
+            // else add product to cart
+            this.cart.push({id: this.product.id, image: this.product.images[0], name: this.product.name, price: this.product.price, amount: this.amount, option: this.option, option1: this.option1})
+            this.$refs.cartModal.open()
+            console.log('push', this.cart)
+          }
+        }
+      }
     }
   }
 }

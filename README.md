@@ -29,3 +29,4 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 - Effect on price
 - Selects on product page
 - disable add to cart if product have option but options aren't selected
+- change images on color select
