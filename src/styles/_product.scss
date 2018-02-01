@@ -29,7 +29,7 @@
     opacity: 1;
 }
 .product-container {
-    padding-bottom: 80px;
+    padding-bottom: 100px;
     .product-gallery {
         width: 50%;
         float: left;
@@ -54,9 +54,16 @@
     .info-item {
         padding: 20px 30px;
         .title {
-        text-align: left;
-        font-size: 30px;
-        font-weight: 300;
+            text-align: left;
+            font-size: 30px;
+            font-weight: 300;
+        }
+        // .multiselect__option--selected {}
+        .multiselect__option--highlight {
+            background-color: $primary-color;
+            &:after {
+                background-color: $primary-color;
+            }
         }
     }
     .price {

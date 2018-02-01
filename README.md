@@ -21,12 +21,18 @@ npm run build --report
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
 ## TODO
-- Sort by
+- General
+    - Lazy load on images
+    - Favicon
+- Products page
+    - Sort by
+    - Pagination
+- Product page
+    - Effect on price
+    - (style modal) disable add to cart if product have option but options aren't selected
+    - change images on color select
+    - gallery controlls
 - Cart
-- Pagination
-- Lazy load on images
-- Favicon
-- Effect on price
-- Selects on product page
-- disable add to cart if product have option but options aren't selected
-- change images on color select
+    - change if color changes
+    - steps
+    - buyer data form

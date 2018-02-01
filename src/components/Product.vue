@@ -118,18 +118,12 @@ export default {
         centeredSlides: true,
         slidesPerView: 'auto',
         touchRatio: 0.2,
-        slideToClickedSlide: true
+        slideToClickedSlide: true,
+        slidesOffsetBefore: -200
       }
     }
   },
   mounted () {
-    // swiper settings
-    this.$nextTick(() => {
-      const swiperTop = this.$refs.swiperTop.swiper
-      const swiperThumbs = this.$refs.swiperThumbs.swiper
-      swiperTop.controller.control = swiperThumbs
-      swiperThumbs.controller.control = swiperTop
-    })
     // get product from list of products
     this.products = [].concat(TSHIRTS, MUGS, STICKERS)
     this.products.forEach(el => {
@@ -138,11 +132,7 @@ export default {
       }
     })
     // check if cart is in localstorage
-    if (storage.getItem('cart')) {
-      this.cart = JSON.parse(storage.getItem('cart'))
-    } else {
-      storage.setItem('cart', JSON.stringify(this.cart))
-    }
+    storage.getItem('cart') ? this.cart = JSON.parse(storage.getItem('cart')) : storage.setItem('cart', JSON.stringify(this.cart))
     console.log(this.cart)
   },
   methods: {
@@ -164,6 +154,7 @@ export default {
         if (this.cart.length === 0) {
           // add product to cart
           this.cart.push({id: this.product.id, image: this.product.images[0], name: this.product.name, price: this.product.price, amount: this.amount, option: this.option, option1: this.option1})
+          storage.setItem('cart', JSON.stringify(this.cart))
           this.$refs.cartModal.open()
           console.log('first item', this.cart)
         } else {
@@ -172,13 +163,17 @@ export default {
             this.cart.forEach(el => {
               if (el.id === this.product.id && el.option === this.option && el.option1 === this.option1) {
                 el.amount += this.amount
+                // restart amount
+                this.amount = 1
               }
             })
+            storage.setItem('cart', JSON.stringify(this.cart))
             this.$refs.cartModal.open()
             console.log('increment', this.cart)
           } else {
             // else add product to cart
             this.cart.push({id: this.product.id, image: this.product.images[0], name: this.product.name, price: this.product.price, amount: this.amount, option: this.option, option1: this.option1})
+            storage.setItem('cart', JSON.stringify(this.cart))
             this.$refs.cartModal.open()
             console.log('push', this.cart)
           }
