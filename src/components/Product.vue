@@ -64,10 +64,24 @@
         </p>
       </div>
     </div>
-    <sweet-modal title="This is a Tabbed Modal" ref="cartModal" width="80%">
-      <sweet-modal-tab title="Tab 1" id="tab1">{{ cart }}</sweet-modal-tab>
-      <sweet-modal-tab title="Tab 2" id="tab2">Contents of Tab 2</sweet-modal-tab>
-      <sweet-modal-tab title="Tab 3" id="tab3" disabled>Tab 3 is disabled</sweet-modal-tab>
+    <sweet-modal title="This is a Tabbed Modal" ref="cartModal" width="50%" class="cart-modal">
+      <sweet-modal-tab title="Cart" id="tab1">
+        <div class="cart-item cf" v-for="(item, index) in cart" :key="index">
+          <div class="cart-image"><img :src="item.image" alt="Product image"></div>
+          <div class="cart-item-info">
+            <router-link :to="{ name: 'Product', params: { id: item.id } }">
+              <h3 class="item-fix">{{ item.name }}</h3>
+            </router-link>
+            <p class="item-fix" v-if="item.option">Size: {{ item.option }}</p>
+            <p class="item-fix" v-if="item.option1">Color: {{ item.option1 }}</p>
+            <p class="item-fix">Quantity: {{ item.amount }}</p>
+            <p class="item-fix">Subtotal: {{ item.price * item.amount }} $</p>
+          </div>
+          <button class="remove-from-cart" @click="removeFromCart(index)">X</button>
+        </div>
+      </sweet-modal-tab>
+      <sweet-modal-tab title="Delivery" id="tab2">Contents of Tab 2</sweet-modal-tab>
+      <sweet-modal-tab title="Payment" id="tab3" disabled>Tab 3 is disabled</sweet-modal-tab>
       <!-- icons is an object containing SVG strings -->
     </sweet-modal>
     <sweet-modal ref="alertModal">Select all options</sweet-modal>
@@ -97,9 +111,6 @@ export default {
     return {
       option: null,
       option1: null,
-      i: [],
-      sOption: null,
-      arrayO: ['One', 'Two'],
       cart: [],
       product: null,
       products: null,
@@ -133,7 +144,6 @@ export default {
     })
     // check if cart is in localstorage
     storage.getItem('cart') ? this.cart = JSON.parse(storage.getItem('cart')) : storage.setItem('cart', JSON.stringify(this.cart))
-    console.log(this.cart)
   },
   methods: {
     changeAmount (operator) {
@@ -179,6 +189,10 @@ export default {
           }
         }
       }
+    },
+    removeFromCart (index) {
+      this.cart.splice(index, 1)
+      storage.setItem('cart', JSON.stringify(this.cart))
     }
   }
 }

@@ -1,0 +1,44 @@
+.cart-modal {
+    font-family: 'Roboto', sans-serif;
+    .cart-item {
+        margin: 10px 40px;
+        border-bottom: 1px solid #eaeaea;
+        position: relative;
+        .cart-image {
+            float: left;
+            width: 15%;
+            img {
+                width: 100%;
+                height: auto;
+            }
+        }
+        .cart-item-info {
+            float: left;
+            width: 85%;
+            
+            .item-fix {
+                padding: 0 70px;
+                text-align: left;
+            }
+            a {
+                font-size: 18px;
+                line-height: 24px;
+                color: #444;
+            }
+            p {
+                font-weight: 300;
+                &:last-child {
+                    text-align: right;
+                    font-weight: 500;
+                    position: absolute;
+                    right: 0;
+                    bottom: 15px;
+                }
+            }
+        }
+        .remove-from-cart {
+            position: absolute;
+            right: 70px;
+        }
+    }
+}
