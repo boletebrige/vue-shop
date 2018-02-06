@@ -24,6 +24,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 - General
     - Lazy load on images
     - Favicon
+    - 404 page
 - Products page
     - Sort by
     - Pagination
